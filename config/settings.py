@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'messaging',
     'django_chat',  #  Ensure this is your renamed app
+    'messaging.apps.MessagingConfig',
 ]
 
 MIDDLEWARE = [

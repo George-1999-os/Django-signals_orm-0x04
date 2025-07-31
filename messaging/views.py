@@ -1,3 +1,4 @@
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
@@ -9,3 +10,6 @@ def delete_user(request):
         request.user.delete()
         return redirect('home')  # or your logout/homepage URL
     return redirect('profile')  # or wherever appropriate
+from django.shortcuts import render
+
+# Create your views here.
