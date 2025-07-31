@@ -1,0 +1,21 @@
+<!-- inbox.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inbox</title>
+</head>
+<body>
+    <h1>Inbox - Threaded Messages</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            {% if not message.parent_message %}
+                {% include "messaging/thread.html" with message=message %}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p>No messages found.</p>
+    {% endif %}
+</body>
+</html>
