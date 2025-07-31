@@ -1,15 +1,17 @@
-
+# messaging/views.py
+from django.shortcuts import render
+from .models import Message
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
-from django.contrib.auth.models import User
 
 @login_required
-def delete_user(request):
-    """Allow logged-in user to delete their own account."""
-    if request.method == "POST":
-        request.user.delete()
-        return redirect('home')  # or your logout/homepage URL
-    return redirect('profile')  # or wherever appropriate
-from django.shortcuts import render
+def inbox(request):
+    """
+    View to list top-level messages and their threaded replies for the logged-in user.
+    Optimized with select_related and prefetch_related.
+    """
+    # Only fetch top-level messages (not replies)
+    messages = Message.objects.filter(receiver=request.user, parent_message=None)\
+        .select_related('sender', 'receiver')\
+        .prefetch_related('replies')
 
-# Create your views here.
+    return render(request, 'messaging/inbox.html', {'messages': messages})
