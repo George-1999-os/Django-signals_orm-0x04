@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,10 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'messaging',
-    'django_chat',  #  Ensure this is your renamed app
-    'messaging.apps.MessagingConfig',
+    'messaging.apps.MessagingConfig',  #  Keep this
+    'django_chat',                     #  Keep this if it exists and is your other app
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
