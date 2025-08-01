@@ -1,13 +1,8 @@
-<!-- thread.html -->
-<div style="margin-left: 20px; border-left: 2px solid #ccc; padding-left: 10px; margin-top: 10px;">
-    <p>
-        <strong>{{ message.sender.username }}</strong> to 
-        <strong>{{ message.receiver.username }}</strong><br>
-        {{ message.content }} <br>
-        <small><em>{{ message.timestamp }}</em></small>
-    </p>
+<!-- messaging/templates/messaging/threaded_replies.html -->
 
-    {% for reply in message.replies.all %}
-        {% include "messaging/thread.html" with message=reply %}
-    {% endfor %}
-</div>
+{% for reply in replies %}
+    <div style="margin-left: 20px;">
+        <p><strong>{{ reply.sender.username }}</strong>: {{ reply.content }}</p>
+        {% include "messaging/threaded_replies.html" with replies=reply.replies.all %}
+    </div>
+{% endfor %}

@@ -1,21 +1,13 @@
-<!-- inbox.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Inbox</title>
-</head>
-<body>
-    <h1>Inbox - Threaded Messages</h1>
+<!-- messaging/templates/messaging/inbox.html -->
 
-    {% if messages %}
-        {% for message in messages %}
-            {% if not message.parent_message %}
-                {% include "messaging/thread.html" with message=message %}
-            {% endif %}
-        {% endfor %}
-    {% else %}
-        <p>No messages found.</p>
-    {% endif %}
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Inbox</h2>
+{% for message in messages %}
+    <div>
+        <p><strong>{{ message.sender.username }}</strong>: {{ message.content }}</p>
+        {% include "messaging/threaded_replies.html" with replies=message.replies.all %}
+    </div>
+{% endfor %}
+{% endblock %}
