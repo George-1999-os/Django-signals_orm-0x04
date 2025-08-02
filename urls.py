@@ -1,8 +1,9 @@
-# messaging/urls.py
+# config/urls.py or django_chat/urls.py
 
-from django.urls import path
-from .views import delete_user
+from django.contrib import admin
+from django.urls import path, include
 
 urlpatterns = [
-    path('delete/', delete_user, name='delete_user'),
+    path('admin/', admin.site.urls),
+    path('messages/', include('messaging.urls')),  # <-- include messaging app routes
 ]
