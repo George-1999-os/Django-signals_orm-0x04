@@ -1,7 +1,6 @@
 from django.urls import path
-from .views import inbox_view, delete_user
+from .views import inbox_view
 
 urlpatterns = [
-    path('', inbox_view, name='inbox'),
-    path('delete/', delete_user, name='delete_user'),
+    path('inbox/', inbox_view, name='inbox'),
 ]

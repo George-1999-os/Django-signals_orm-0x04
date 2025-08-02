@@ -8,13 +8,8 @@ class Message(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     edited = models.BooleanField(default=False)
     
-    parent_message = models.ForeignKey(
-        'self',
-        null=True,
-        blank=True,
-        related_name='replies',
-        on_delete=models.CASCADE
-    )
+    # Self-referential relationship
+    parent_message = models.ForeignKey('self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.sender} to {self.receiver}: {self.content[:30]}'
+        return f'{self.sender} -> {self.receiver}: {self.content[:30]}'

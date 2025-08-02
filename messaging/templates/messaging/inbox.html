@@ -1,11 +1,16 @@
-<!-- messaging/templates/messaging/inbox.html -->
-<h1>Inbox</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inbox</title>
+</head>
+<body>
+    <h1>Inbox</h1>
 
-{% for thread in threads %}
-    <div style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px;">
-        <p><strong>{{ thread.message.sender.username }}:</strong> {{ thread.message.content }}</p>
-        <small>{{ thread.message.timestamp }}</small>
-
-        {% include "messaging/thread_replies.html" with replies=thread.replies %}
-    </div>
-{% endfor %}
+    {% for thread in threads %}
+        <div style="margin-left: 0;">
+            <strong>{{ thread.message.sender.username }}</strong>: {{ thread.message.content }}
+            {% include 'messaging/thread.html' with replies=thread.replies level=1 %}
+        </div>
+    {% endfor %}
+</body>
+</html>

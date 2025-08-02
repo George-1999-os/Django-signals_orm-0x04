@@ -1,9 +1,6 @@
-<!-- messaging/templates/messaging/thread_replies.html -->
 {% for reply in replies %}
-    <div style="margin-left: 30px; border-left: 2px solid #ddd; padding-left: 10px;">
-        <p><strong>{{ reply.message.sender.username }}:</strong> {{ reply.message.content }}</p>
-        <small>{{ reply.message.timestamp }}</small>
-
-        {% include "messaging/thread_replies.html" with replies=reply.replies %}
+    <div style="margin-left: {{ level|add:"1" }}em;">
+        <strong>{{ reply.message.sender.username }}</strong>: {{ reply.message.content }}
+        {% include 'messaging/thread.html' with replies=reply.replies level=level|add:"1" %}
     </div>
 {% endfor %}
