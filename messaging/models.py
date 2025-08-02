@@ -1,4 +1,3 @@
-# messaging/models.py
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -8,8 +7,7 @@ class Message(models.Model):
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
     edited = models.BooleanField(default=False)
-
-    #  Self-referential FK
+    
     parent_message = models.ForeignKey(
         'self',
         null=True,
@@ -19,4 +17,4 @@ class Message(models.Model):
     )
 
     def __str__(self):
-        return f'Message from {self.sender.username} to {self.receiver.username}'
+        return f'{self.sender} to {self.receiver}: {self.content[:30]}'
