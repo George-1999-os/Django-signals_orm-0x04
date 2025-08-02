@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Inbox</title>
-</head>
-<body>
-    <h1>Inbox</h1>
-
-    {% for thread in threads %}
-        <div style="margin-left: 0;">
-            <strong>{{ thread.message.sender.username }}</strong>: {{ thread.message.content }}
-            {% include 'messaging/thread.html' with replies=thread.replies level=1 %}
+{% for thread in threads %}
+    <p><strong>{{ thread.message.sender }}</strong>: {{ thread.message.content }}</p>
+    {% for reply in thread.replies %}
+        <div style="margin-left: 20px;">
+            <strong>{{ reply.message.sender }}</strong>: {{ reply.message.content }}
         </div>
     {% endfor %}
-</body>
-</html>
+{% endfor %}
