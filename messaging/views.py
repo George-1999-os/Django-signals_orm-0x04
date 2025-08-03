@@ -2,29 +2,18 @@ from django.shortcuts import render
 from .models import Message
 
 
-def get_threaded_replies(message):
-    """Recursively fetch replies to a message."""
-    thread = []
-    for reply in message.replies.all().select_related('sender'):
-        thread.append({
-            'message': reply,
-            'replies': get_threaded_replies(reply)
-        })
-    return thread
-
-
 def inbox_view(request):
-    """Inbox with threaded messages."""
-    top_messages = Message.objects.filter(
-        receiver=request.user,
-        parent_message__isnull=True
-    ).select_related('sender', 'receiver').prefetch_related('replies')
+    user = request.user  # current logged-in user
 
-    threads = []
-    for msg in top_messages:
-        threads.append({
-            'message': msg,
-            'replies': get_threaded_replies(msg)
-        })
+    #  Use custom manager to get unread messages
+    unread_messages = Message.unread.unread_for_user(user)
 
-    return render(request, 'messaging/inbox.html', {'threads': threads})
+    #  Use default manager to get optimized unread messages with only necessary fields
+    optimized_messages = Message.objects.filter(
+        receiver=user, read=False
+    ).only('id', 'sender', 'content', 'timestamp').select_related('sender')
+
+    return render(request, 'messaging/inbox.html', {
+        'unread_messages': unread_messages,
+        'optimized_messages': optimized_messages
+    })
